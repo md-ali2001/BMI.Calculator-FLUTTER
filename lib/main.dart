@@ -49,8 +49,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  var result = "";
   var weight = TextEditingController();
-  var height = TextEditingController();
+  var heightft = TextEditingController();
+  var heightinch = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -71,10 +73,12 @@ class _MyHomePageState extends State<MyHomePage> {
         // in the middle of the parent.
         child: Column(
           children: [
+            SizedBox(height: 12),
             Text(
               'BMI',
               style: TextStyle(fontSize: 34, fontWeight: FontWeight.w700),
             ),
+            SizedBox(height: 12),
             TextField(
               controller: weight,
               decoration: InputDecoration(
@@ -83,21 +87,56 @@ class _MyHomePageState extends State<MyHomePage> {
               keyboardType: TextInputType.number,
             ),
             TextField(
-              controller: height,
+              controller: heightft,
               decoration: InputDecoration(
                   label: Text('Enter your height in feet'),
                   prefixIcon: Icon(Icons.height)),
               keyboardType: TextInputType.number,
             ),
+            TextField(
+              controller: heightinch,
+              decoration: InputDecoration(
+                  label: Text('and inches'), prefixIcon: Icon(Icons.height)),
+              keyboardType: TextInputType.number,
+            ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(14.0),
               child: ElevatedButton(
                   onPressed: () {
                     var wt = weight.text.toString();
-                    var ht = height.text.toString();
-                    if (wt == " " || ht == " ") {}
+                    var htft = heightft.text.toString();
+                    var htin = heightft.text.toString();
+                    if (wt == "" || htft == "" || htin == "") {
+                      setState(() {
+                        result = "please fill all the required fields";
+                      });
+                    } else
+                      ;
+                    var iwt = int.parse(wt);
+                    var ihtft = int.parse(htft);
+                    var ihtin = int.parse(htin);
+                    var totalinch = ihtft * 12 + ihtin;
+                    var metre = totalinch / 39.37;
+                    var tcm = metre * 2.54;
+                    var tm = tcm / 100;
+
+                    var bmi = iwt / (tm * tm);
+                    setState(() {
+                      result = "${bmi.toStringAsFixed(4)} kg/m^2";
+                    });
                   },
                   child: Text('CALCULATE')),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(14.0),
+              child: Text(
+                "RESULT: $result",
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.green,
+                    backgroundColor: Colors.black12),
+              ),
             )
           ],
           // Column is also a layout widget. It takes a list of children and
