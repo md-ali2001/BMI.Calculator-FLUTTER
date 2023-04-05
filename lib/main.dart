@@ -68,91 +68,100 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text('YOUR BMI'),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          children: [
-            SizedBox(height: 12),
-            Text(
-              'BMI',
-              style: TextStyle(fontSize: 34, fontWeight: FontWeight.w700),
-            ),
-            SizedBox(height: 12),
-            TextField(
-              controller: weight,
-              decoration: InputDecoration(
-                  label: Text('Enter your weight in kg'),
-                  prefixIcon: Icon(Icons.line_weight)),
-              keyboardType: TextInputType.number,
-            ),
-            TextField(
-              controller: heightft,
-              decoration: InputDecoration(
-                  label: Text('Enter your height in feet'),
-                  prefixIcon: Icon(Icons.height)),
-              keyboardType: TextInputType.number,
-            ),
-            TextField(
-              controller: heightinch,
-              decoration: InputDecoration(
-                  label: Text('and inches'), prefixIcon: Icon(Icons.height)),
-              keyboardType: TextInputType.number,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(14.0),
-              child: ElevatedButton(
-                  onPressed: () {
-                    var wt = weight.text.toString();
-                    var htft = heightft.text.toString();
-                    var htin = heightft.text.toString();
-                    if (wt == "" || htft == "" || htin == "") {
-                      setState(() {
-                        result = "please fill all the required fields";
-                      });
-                    } else
-                      ;
-                    var iwt = int.parse(wt);
-                    var ihtft = int.parse(htft);
-                    var ihtin = int.parse(htin);
-                    var totalinch = ihtft * 12 + ihtin;
-                    var metre = totalinch / 39.37;
-                    var tcm = metre * 2.54;
-                    var tm = tcm / 100;
+      body: Container(
+        color: Colors.tealAccent,
+        child: Center(
+          // Center is a layout widget. It takes a single child and positions it
+          // in the middle of the parent.
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: 12),
+                Text(
+                  'BMI',
+                  style: TextStyle(
+                      fontSize: 34,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.purpleAccent),
+                ),
+                SizedBox(height: 12),
+                TextField(
+                  controller: weight,
+                  decoration: InputDecoration(
+                      label: Text('Enter your weight in kg'),
+                      prefixIcon: Icon(Icons.line_weight)),
+                  keyboardType: TextInputType.number,
+                ),
+                TextField(
+                  controller: heightft,
+                  decoration: InputDecoration(
+                      label: Text('Enter your height in feet'),
+                      prefixIcon: Icon(Icons.height)),
+                  keyboardType: TextInputType.number,
+                ),
+                TextField(
+                  controller: heightinch,
+                  decoration: InputDecoration(
+                      label: Text('and inches'),
+                      prefixIcon: Icon(Icons.height)),
+                  keyboardType: TextInputType.number,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(14.0),
+                  child: ElevatedButton(
+                      onPressed: () {
+                        var wt = weight.text.toString();
+                        var htft = heightft.text.toString();
+                        var htin = heightft.text.toString();
+                        if (wt == "" || htft == "" || htin == "") {
+                          setState(() {
+                            result = "please fill all the required fields";
+                          });
+                        } else
+                          ;
+                        var iwt = int.parse(wt);
+                        var ihtft = int.parse(htft);
+                        var ihtin = int.parse(htin);
+                        var totalinch = ihtft * 12 + ihtin;
+                        var metre = totalinch / 39.37;
+                        var tcm = metre * 2.54;
+                        var tm = tcm / 100;
 
-                    var bmi = iwt / (tm * tm);
-                    setState(() {
-                      result = "${bmi.toStringAsFixed(4)} kg/m^2";
-                    });
-                  },
-                  child: Text('CALCULATE')),
+                        var bmi = iwt / (tm * tm);
+                        setState(() {
+                          result = "${bmi.toStringAsFixed(4)} kg/m^2";
+                        });
+                      },
+                      child: Text('CALCULATE')),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(14.0),
+                  child: Text(
+                    "RESULT: $result",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.red,
+                        backgroundColor: Colors.yellow),
+                  ),
+                )
+              ],
+              // Column is also a layout widget. It takes a list of children and
+              // arranges them vertically. By default, it sizes itself to fit its
+              // children horizontally, and tries to be as tall as its parent.
+              //
+              // Invoke "debug painting" (press "p" in the console, choose the
+              // "Toggle Debug Paint" action from the Flutter Inspector in Android
+              // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
+              // to see the wireframe for each widget.
+              //
+              // Column has various properties to control how it sizes itself and
+              // how it positions its children. Here we use mainAxisAlignment to
+              // center the children vertically; the main axis here is the vertical
+              // axis because Columns are vertical (the cross axis would be
+              // horizontal).
             ),
-            Padding(
-              padding: const EdgeInsets.all(14.0),
-              child: Text(
-                "RESULT: $result",
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.green,
-                    backgroundColor: Colors.black12),
-              ),
-            )
-          ],
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
+          ),
         ),
       ),
       // This trailing comma makes auto-formatting nicer for build methods.
